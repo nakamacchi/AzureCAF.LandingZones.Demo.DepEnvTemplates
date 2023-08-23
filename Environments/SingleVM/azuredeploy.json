@@ -55,8 +55,7 @@
               "privateIPAllocationMethod": "Dynamic"
             }
           }
-        ],
-        "enableAcceleratedNetworking": true
+        ]
       }
     },
     {
