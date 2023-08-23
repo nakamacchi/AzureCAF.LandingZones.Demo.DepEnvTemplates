@@ -1,6 +1,157 @@
 {
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "String",
+      "allowedValues": [
+        "eastus",
+        "westus",
+        "japaneast",
+        "japanwest"
+      ],
+      "defaultValue": "eastus"
+    },
+    "virtualMachineName": {
+      "type": "String",
+      "defaultValue": "vm-test"
+    },
+    "virtualMachineSize": {
+      "type": "String",
+      "allowedValues":[
+        "Standard_D2s_v3",
+        "Standard_D4s_v3",
+        "Standard_D8s_v3",
+        "Standard_B2ms",
+        "Standard_B4ms",
+        "Standard_B8ms"
+      ],
+      "defaultValue": "Standard_D2s_v3"
+    },
+    "adminUsername": {
+      "type": "String",
+      "defaultValue": "azureuser"
+    },
+    "adminPassword": {
+      "type": "SecureString",
+      "defaultValue": "Password1234!"
+    }
+  },
+  "variables": {
+    "subnetRef": "/subscriptions/98d2bfb1-25eb-442a-baad-19ada4c22f29/resourceGroups/rg-devbox-eus/providers/Microsoft.Network/virtualNetworks/vnet-devbox-eus/subnets/DefaultSubnet",
+    "aadLoginExtensionName": "AADLoginForWindows",
+    "nicName": "[concat(parameters('virtualMachineName'), '-nic')]"
+  },
+
   "resources": [
+    {
+      "type": "Microsoft.Network/networkInterfaces",
+      "apiVersion": "2022-11-01",
+      "name": "[variables('nicName')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "subnet": {
+                "id": "[variables('subnetRef')]"
+              },
+              "privateIPAllocationMethod": "Dynamic"
+            }
+          }
+        ],
+        "enableAcceleratedNetworking": true
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines",
+      "apiVersion": "2022-03-01",
+      "name": "[parameters('virtualMachineName')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[variables('nicName')]"
+      ],
+      "identity": {
+        "type": "systemAssigned"
+      },
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('virtualMachineSize')]"
+        },
+        "storageProfile": {
+          "osDisk": {
+            "createOption": "fromImage",
+            "managedDisk": {
+              "storageAccountType": "Standard_LRS"
+            },
+            "deleteOption": "Delete"
+          },
+          "imageReference": {
+            "publisher": "MicrosoftWindowsServer",
+            "offer": "WindowsServer",
+            "sku": "2022-datacenter-azure-edition-hotpatch",
+            "version": "latest"
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName'))]",
+              "properties": {
+                "deleteOption": "Delete"
+              }
+            }
+          ]
+        },
+        "osProfile": {
+          "computerName": "[parameters('virtualMachineComputerName')]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]",
+          "windowsConfiguration": {
+            "enableAutomaticUpdates": true,
+            "provisionVmAgent": true,
+            "patchSettings": {
+              "enableHotpatching": true,
+              "patchMode": "AutomaticByPlatform",
+              "automaticByPlatformSettings": {
+                "rebootSetting": "IfRequired"
+              }
+            }
+          }
+        },
+        "securityProfile": {
+          "securityType": "TrustedLaunch",
+          "uefiSettings": {
+            "secureBootEnabled": true,
+            "vTpmEnabled": true
+          }
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": true
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "apiVersion": "2018-10-01",
+      "name": "[concat(parameters('virtualMachineName'),'/', variables('aadLoginExtensionName'))]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Azure.ActiveDirectory",
+        "type": "[variables('aadLoginExtensionName')]",
+        "typeHandlerVersion": "1.0",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "mdmId": ""
+        }
+      }
+    }
   ]
 }
