@@ -7,7 +7,8 @@
       "defaultValue": "[resourceGroup().location]"
     },
     "virtualMachineName": {
-      "type": "String"
+      "type": "String",
+      "defaultValue": "testVM"
     },
     "virtualMachineSize": {
       "type": "String",
@@ -18,13 +19,16 @@
         "Standard_B2ms",
         "Standard_B4ms",
         "Standard_B8ms"
-      ]
+      ],
+      "defaultValue": "Standard_D2s_v3"
     },
     "adminUsername": {
-      "type": "String"
+      "type": "String",
+      "defaultValue": "localadmin"
     },
     "adminPassword": {
-      "type": "SecureString"
+      "type": "SecureString",
+      "defaultValue": "p&ssw0rdp&ssw0rd"
     }
   },
   "variables": {
