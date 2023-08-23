@@ -1,7 +1,0 @@
-# yaml-language-server: $schema=https://github.com/Azure/deployment-environments/releases/download/2022-11-11-preview/manifest.schema.json
-name: Sandbox
-version: 1.0.0
-summary: サンドボックス環境
-description: テスト用のサンドボックス環境を配置します。自由にリソースを作成して使うことができます。
-runner: ARM
-templatePath: azuredeploy.json
