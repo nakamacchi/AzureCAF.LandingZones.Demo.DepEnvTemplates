@@ -13,8 +13,7 @@
       "defaultValue": "eastus"
     },
     "virtualMachineName": {
-      "type": "String",
-      "defaultValue": "vm-test"
+      "type": "String"
     },
     "virtualMachineSize": {
       "type": "String",
@@ -25,16 +24,13 @@
         "Standard_B2ms",
         "Standard_B4ms",
         "Standard_B8ms"
-      ],
-      "defaultValue": "Standard_D2s_v3"
+      ]
     },
     "adminUsername": {
-      "type": "String",
-      "defaultValue": "azureuser"
+      "type": "String"
     },
     "adminPassword": {
-      "type": "SecureString",
-      "defaultValue": "Password1234!"
+      "type": "SecureString"
     }
   },
   "variables": {
