@@ -4,13 +4,7 @@
   "parameters": {
     "location": {
       "type": "String",
-      "allowedValues": [
-        "eastus",
-        "westus",
-        "japaneast",
-        "japanwest"
-      ],
-      "defaultValue": "eastus"
+      "defaultValue": "[resourceGroup().location]"
     },
     "virtualMachineName": {
       "type": "String"

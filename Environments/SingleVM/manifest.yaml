@@ -1,7 +1,35 @@
 # yaml-language-server: $schema=https://github.com/Azure/deployment-environments/releases/download/2022-11-11-preview/manifest.schema.json
 name: SingleVM
 version: 1.3.0
-summary: テスト用サーバ
-description: テスト用のサーバを作成します。
+summary: 'テスト用サーバ'
+description: 'テスト用のサーバを作成します。'
 runner: ARM
 templatePath: azuredeploy.json
+parameters:
+  - id: virtualMachineName
+    name: virtualMachineName
+    description: 'VM の名前'
+    type: string
+    required: true
+  - id: virtualMachineSize
+    name: virtualMachineSize
+    description: 'VM のサイズ'
+    type: string
+    allowed:
+      - 'Standard_D2s_v3'
+      - 'Standard_D4s_v3'
+      - 'Standard_D8s_v3'
+      - 'Standard_B2ms'
+      - 'Standard_B4ms'
+      - 'Standard_B8ms'
+    default: 'Standard_D2s_v3'
+  - id: adminUsername
+    name: adminUsername
+    description: '管理者ユーザ名'
+    type: string
+    default: 'azureuser'
+  - id: adminPassword
+    name: adminPassword
+    description: '管理者パスワード'
+    type: string
+    default: 'p&ssw0rdp&ssw0rd'
