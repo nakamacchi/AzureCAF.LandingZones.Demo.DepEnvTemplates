@@ -100,7 +100,7 @@
           ]
         },
         "osProfile": {
-          "computerName": "[parameters('virtualMachineComputerName')]",
+          "computerName": "[parameters('virtualMachineName')]",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPassword')]",
           "windowsConfiguration": {
