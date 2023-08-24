@@ -29,10 +29,12 @@
     "adminPassword": {
       "type": "SecureString",
       "defaultValue": "p&ssw0rdp&ssw0rd"
+    },
+    "targetSubnetIdToJoin": {
+      "type": "String"
     }
   },
   "variables": {
-    "subnetRef": "/subscriptions/98d2bfb1-25eb-442a-baad-19ada4c22f29/resourceGroups/rg-devbox-eus/providers/Microsoft.Network/virtualNetworks/vnet-devbox-eus/subnets/DefaultSubnet",
     "aadLoginExtensionName": "AADLoginForWindows",
     "nicName": "[concat(parameters('virtualMachineName'), '-nic')]"
   },
@@ -50,7 +52,7 @@
             "name": "ipconfig1",
             "properties": {
               "subnet": {
-                "id": "[variables('subnetRef')]"
+                "id": "[parameters('targetSubnetIdToJoin')]"
               },
               "privateIPAllocationMethod": "Dynamic"
             }

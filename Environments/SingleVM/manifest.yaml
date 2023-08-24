@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://github.com/Azure/deployment-environments/releases/download/2022-11-11-preview/manifest.schema.json
 name: SingleVM
-version: 1.4.0
+version: 1.5.0
 summary: 'テスト用サーバ'
 description: 'テスト用のサーバを作成します。'
 runner: ARM
@@ -33,3 +33,7 @@ parameters:
     description: '管理者パスワード'
     type: string
     default: 'p&ssw0rdp&ssw0rd'
+  - id: targetSubnetIdToJoin
+    name: targetSubnetIdToJoin
+    description: 'VM を参加させるサブネット ID'
+    type: string
