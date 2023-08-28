@@ -1,8 +1,8 @@
 # yaml-language-server: $schema=https://github.com/Azure/deployment-environments/releases/download/2022-11-11-preview/manifest.schema.json
-name: Lab1-SingleVM
+name: Lab-SingleVM
 version: 1.5.0
-summary: 'テスト用サーバ'
-description: 'テスト用のサーバを作成します。'
+summary: 'テスト用 VM (ラボ環境専用)'
+description: '閉域環境接続されたサーバを作成します。'
 runner: ARM
 templatePath: azuredeploy.json
 parameters:

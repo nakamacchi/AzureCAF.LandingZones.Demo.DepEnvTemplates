@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://github.com/Azure/deployment-environments/releases/download/2022-11-11-preview/manifest.schema.json
 name: Lab-WebAppAndSqlDb
 version: 1.0.0
-summary: 'ラボ環境用 Web-DB システム'
-description: 'テスト用の Web Apps と SQL DB を作成します。'
+summary: 'Web-DB システム'
+description: 'Web Apps と SQL DB を作成します。'
 runner: ARM
 templatePath: azuredeploy.json
