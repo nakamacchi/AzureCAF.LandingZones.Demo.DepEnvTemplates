@@ -68,7 +68,10 @@
       "properties": {
         "endIpAddress": "255.255.255.255",
         "startIpAddress": "0.0.0.0"
-      }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Sql/servers', variables('sqlServerName'))]"
+      ]
     },
     {
       "type": "Microsoft.Sql/servers/databases",
