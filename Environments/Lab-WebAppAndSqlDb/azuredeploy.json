@@ -61,6 +61,16 @@
       }
     },
     {
+      "type": "Microsoft.Sql/servers/firewallRules",
+      "apiVersion": "2022-11-01-preview",
+      "name": "[format('{0}/{1}', variables('sqlServerName'), 'AllowAll')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "endIpAddress": "255.255.255.255",
+        "startIpAddress": "0.0.0.0"
+      }
+    },
+    {
       "type": "Microsoft.Sql/servers/databases",
       "apiVersion": "2022-11-01-preview",
       "name": "[format('{0}/{1}', variables('sqlServerName'), variables('sqlDbName'))]",
